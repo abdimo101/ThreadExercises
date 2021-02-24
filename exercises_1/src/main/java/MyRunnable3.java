@@ -1,14 +1,23 @@
  class MyRunnable3 implements Runnable{
-    long startTime = System.currentTimeMillis();
+    private boolean go = true;
+    private Thread me;
      @Override
      public void run() {
-         for (int i = 10; 10000 > System.currentTimeMillis()-startTime; i++) {
-             System.out.println(i);
+         me = Thread.currentThread();
+         int count = 10;
+         while (go) {
+             System.out.println(Thread.currentThread().getName()+" : "+ count);
+             count++;
              try {
-                 Thread.sleep(1000);
+                 Thread.sleep(3000);
              } catch (InterruptedException e) {
-                 e.printStackTrace();
+                 // e.printStackTrace();
+                 go = false;
              }
          }
+     }
+
+     public void cancel() {
+         me.interrupt();
      }
  }
